@@ -246,7 +246,7 @@ Factors affecting TCP throughput:
    - Triggers retransmission
    - Reduces cwnd
    - Major performance killer
-   - Even 1% loss → 50% throughput reduction
+   - Example: 1% loss can reduce throughput by ~50% (varies by RTT, algorithm)
 
 3. Round Trip Time (RTT)
    - Higher RTT → slower growth

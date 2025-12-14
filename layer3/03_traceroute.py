@@ -248,7 +248,7 @@ def main():
 2. Trace different destinations:
    - Nearby: Your gateway
    - Medium: google.com
-   - Far: internationa sites
+   - Far: international sites
 
 3. Watch in Wireshark:
    - Filter: icmp || (ip.ttl <= 5)
