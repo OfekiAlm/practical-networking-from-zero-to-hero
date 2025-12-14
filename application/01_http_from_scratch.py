@@ -119,6 +119,7 @@ def send_http_request(host, port=80, path="/", use_ssl=False):
         # Step 3: Wrap with SSL if needed
         if use_ssl:
             print("3. Establishing SSL/TLS...")
+            # create_default_context() uses secure defaults and disables insecure protocols
             context = ssl.create_default_context()
             sock = context.wrap_socket(sock, server_hostname=host)
             print("   ✓ TLS handshake complete")
