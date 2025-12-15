@@ -1,0 +1,163 @@
+.job-status {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #eee;
+}
+
+.status-header h2 {
+  font-size: 2rem;
+  color: #333;
+  margin: 0;
+}
+
+.status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.job-info {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-item strong {
+  display: inline-block;
+  width: 120px;
+  color: #495057;
+}
+
+.info-item code {
+  background-color: #e9ecef;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+.polling-indicator {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #e3f2fd;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  color: #1976d2;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(25, 118, 210, 0.3);
+  border-top-color: #1976d2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.result-section {
+  margin-top: 2rem;
+}
+
+.result-section h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.result-data {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+.result-data pre {
+  margin: 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.metadata {
+  background-color: #f1f3f5;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.metadata h4 {
+  font-size: 1.2rem;
+  color: #495057;
+  margin-bottom: 1rem;
+}
+
+.metadata-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.metadata-item {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.metadata-key {
+  font-weight: 600;
+  color: #6c757d;
+  min-width: 150px;
+}
+
+.metadata-value {
+  color: #495057;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+.error-box {
+  background-color: #fee;
+  border: 1px solid #fcc;
+  border-radius: 8px;
+  padding: 1rem;
+  color: #c33;
+  margin-bottom: 1rem;
+}
+
+.loading-box {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.2rem;
+  color: #888;
+}

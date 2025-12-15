@@ -1,0 +1,86 @@
+.
+├── api
+│   ├── models
+│   ├── routers
+│   │   ├── __init__.py
+│   │   ├── demos.py
+│   │   └── jobs.py
+│   ├── __init__.py
+│   └── main.py
+├── application
+│   ├── 01_http_from_scratch.py
+│   ├── 02_dns_query.py
+│   └── 03_packet_capture_analyzer.py
+├── backend
+│   ├── demos
+│   │   ├── layer2
+│   │   ├── layer3
+│   │   ├── layer4
+│   │   ├── __init__.py
+│   │   └── registry.py
+│   ├── schemas
+│   │   ├── __init__.py
+│   │   ├── base.py
+│   │   └── demos.py
+│   ├── worker
+│   │   ├── __init__.py
+│   │   ├── container_runner.py
+│   │   ├── executor.py
+│   │   └── queue_manager.py
+│   └── __init__.py
+├── docker
+│   ├── Dockerfile.api
+│   ├── Dockerfile.frontend
+│   ├── Dockerfile.worker
+│   └── nginx.conf
+├── frontend
+│   ├── public
+│   │   └── index.html
+│   ├── src
+│   │   ├── components
+│   │   ├── services
+│   │   ├── types
+│   │   ├── App.css
+│   │   ├── App.js
+│   │   ├── index.css
+│   │   └── index.js
+│   └── package.json
+├── layer2
+│   ├── 01_ethernet_basics.py
+│   ├── 02_arp_demo.py
+│   └── 03_arp_spoof_demo.py
+├── layer3
+│   ├── 01_ip_packet_anatomy.py
+│   ├── 02_icmp_ping.py
+│   ├── 03_traceroute.py
+│   └── 04_ip_fragmentation.py
+├── layer4
+│   ├── 01_udp_basics.py
+│   ├── 02_tcp_handshake.py
+│   ├── 03_tcp_connection.py
+│   ├── 04_tcp_states.py
+│   └── 05_tcp_retransmission.py
+├── logs
+├── tests
+│   ├── api
+│   ├── demos
+│   ├── worker
+│   ├── __init__.py
+│   └── test_api.py
+├── tools
+│   ├── packet_forge.py
+│   ├── packet_sniffer.py
+│   └── traffic_analyzer.py
+├── ARCHITECTURE.md
+├── DELIVERABLES.md
+├── IMPLEMENTATION_SUMMARY.md
+├── PROJECT_STRUCTURE.txt
+├── README-PRODUCTION.md
+├── README.md
+├── SECURITY.md
+├── docker-compose.yml
+├── quickstart.sh
+├── requirements-backend.txt
+└── requirements.txt
+
+28 directories, 56 files
