@@ -62,6 +62,8 @@ const DemoExecutor = ({ demo, onJobCreated }) => {
     const value = parameters[fieldName] || '';
     const error = errors[fieldName];
     const description = fieldSchema.description || '';
+    const descriptionId = `${fieldName}-description`;
+    const errorId = `${fieldName}-error`;
 
     let inputType = 'text';
     if (fieldSchema.type === 'integer' || fieldSchema.type === 'number') {
@@ -74,7 +76,11 @@ const DemoExecutor = ({ demo, onJobCreated }) => {
           {fieldName}
           {fieldSchema.required && <span className="required">*</span>}
         </label>
-        {description && <p className="field-description">{description}</p>}
+        {description && (
+          <p id={descriptionId} className="field-description">
+            {description}
+          </p>
+        )}
         <input
           id={fieldName}
           type={inputType}
@@ -84,8 +90,19 @@ const DemoExecutor = ({ demo, onJobCreated }) => {
           min={fieldSchema.minimum}
           max={fieldSchema.maximum}
           disabled={submitting}
+          required={fieldSchema.required}
+          aria-describedby={
+            [description && descriptionId, error && errorId]
+              .filter(Boolean)
+              .join(' ') || undefined
+          }
+          aria-invalid={error ? 'true' : 'false'}
         />
-        {error && <span className="field-error">{error}</span>}
+        {error && (
+          <span id={errorId} className="field-error" role="alert">
+            {error}
+          </span>
+        )}
       </div>
     );
   };

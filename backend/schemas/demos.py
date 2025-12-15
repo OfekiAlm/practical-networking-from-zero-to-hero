@@ -35,7 +35,7 @@ class TCPHandshakeParams(BaseModel):
     @field_validator("target_ip")
     @classmethod
     def validate_ip(cls, v: str) -> str:
-        """Validate IPv4 address format."""
+        """Validate IPv4 address format and block private/reserved ranges."""
         pattern = r"^(\d{1,3}\.){3}\d{1,3}$"
         if not re.match(pattern, v):
             raise ValueError("Invalid IPv4 address format")
@@ -46,10 +46,29 @@ class TCPHandshakeParams(BaseModel):
             if int(octet) > 255:
                 raise ValueError(f"Invalid octet value: {octet}")
         
-        # Block private/special ranges for security (optional, can be relaxed)
+        # Block private/reserved ranges to prevent SSRF attacks
         first_octet = int(octets[0])
-        if first_octet in [0, 127, 224, 240]:
+        second_octet = int(octets[1])
+        
+        # Block special ranges
+        if first_octet in [0, 127, 224, 240, 255]:
             raise ValueError(f"IP address range not allowed: {v}")
+        
+        # Block private ranges (10.0.0.0/8)
+        if first_octet == 10:
+            raise ValueError(f"Private IP address not allowed: {v}")
+        
+        # Block private ranges (172.16.0.0/12)
+        if first_octet == 172 and 16 <= second_octet <= 31:
+            raise ValueError(f"Private IP address not allowed: {v}")
+        
+        # Block private ranges (192.168.0.0/16)
+        if first_octet == 192 and second_octet == 168:
+            raise ValueError(f"Private IP address not allowed: {v}")
+        
+        # Block link-local (169.254.0.0/16)
+        if first_octet == 169 and second_octet == 254:
+            raise ValueError(f"Link-local IP address not allowed: {v}")
         
         return v
 

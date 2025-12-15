@@ -1,5 +1,6 @@
 """Main FastAPI application."""
 import logging
+import os
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from typing import AsyncGenerator
@@ -43,10 +44,18 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+import os
+
 # CORS middleware configuration
+# In production, set ALLOWED_ORIGINS environment variable
+allowed_origins = os.getenv(
+    "ALLOWED_ORIGINS",
+    "http://localhost:3000,http://localhost:3001"
+).split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],  # Frontend URLs
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

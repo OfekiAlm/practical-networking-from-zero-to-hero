@@ -144,7 +144,7 @@ def _execute_in_docker(
             "-v", f"{tmppath}:/output:rw",  # Mount output directory
             "-e", f"DEMO_ID={demo_id}",
             "-e", "PYTHONUNBUFFERED=1",
-            "networking-demo-worker:latest",  # Worker image
+            "networking-demo-worker:1.0.0",  # Worker image (pinned version)
             "python", "-m", "backend.worker.container_runner",
             "/input/params.json",
             "/output/output.json"

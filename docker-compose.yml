@@ -31,6 +31,8 @@ services:
     environment:
       - REDIS_URL=redis://redis:6379/0
       - LOG_LEVEL=INFO
+      - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:3001
+      - JOB_RESULT_TTL=3600
     depends_on:
       redis:
         condition: service_healthy
@@ -50,11 +52,13 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile.worker
+    image: networking-demo-worker:1.0.0
     container_name: networking-demo-worker
     restart: unless-stopped
     environment:
       - REDIS_URL=redis://redis:6379/0
       - LOG_LEVEL=INFO
+      - JOB_RESULT_TTL=3600
     depends_on:
       redis:
         condition: service_healthy

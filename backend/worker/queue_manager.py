@@ -5,6 +5,7 @@ For production, this can be replaced with Celery if needed.
 """
 import json
 import logging
+import os
 from datetime import datetime, timezone
 from typing import Dict, Any, Optional
 
@@ -73,7 +74,7 @@ class QueueManager:
                     parameters,
                     job_id=job_id,  # RQ job ID same as our job ID
                     timeout=300,
-                    result_ttl=3600  # Keep results for 1 hour
+                    result_ttl=int(os.getenv("JOB_RESULT_TTL", "3600"))  # Configurable TTL
                 )
                 logger.info(f"Job {job_id} enqueued with RQ")
             except Exception as e:
