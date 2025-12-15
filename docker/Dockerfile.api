@@ -1,0 +1,39 @@
+# Dockerfile for FastAPI backend
+
+FROM python:3.11-slim
+
+# Create non-root user
+RUN groupadd -r apiuser -g 1000 && \
+    useradd -u 1000 -r -g apiuser -m -s /sbin/nologin apiuser
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements
+COPY requirements.txt requirements-backend.txt ./
+RUN pip install --no-cache-dir -r requirements.txt -r requirements-backend.txt
+
+# Copy application code
+COPY backend /app/backend
+COPY api /app/api
+
+# Create logs directory
+RUN mkdir -p /app/logs && \
+    chown -R apiuser:apiuser /app
+
+# Switch to non-root user
+USER apiuser
+
+# Set Python path
+ENV PYTHONPATH=/app
+ENV PYTHONUNBUFFERED=1
+
+# Expose port
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+    CMD python -c "import requests; requests.get('http://localhost:8000/api/health')" || exit 1
+
+# Run uvicorn
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]

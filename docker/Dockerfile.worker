@@ -1,0 +1,43 @@
+# Dockerfile for demo execution worker
+# This container runs with strict security constraints
+
+FROM python:3.11-slim
+
+# Create non-root user
+RUN groupadd -r demouser -g 1000 && \
+    useradd -u 1000 -r -g demouser -m -s /sbin/nologin demouser
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies for network tools
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    libpcap0.8 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY requirements.txt requirements-backend.txt ./
+RUN pip install --no-cache-dir -r requirements.txt -r requirements-backend.txt
+
+# Copy application code
+COPY backend /app/backend
+COPY api /app/api
+
+# Create necessary directories
+RUN mkdir -p /input /output /tmp && \
+    chown -R demouser:demouser /app /input /output /tmp
+
+# Switch to non-root user
+USER demouser
+
+# Set Python path
+ENV PYTHONPATH=/app
+ENV PYTHONUNBUFFERED=1
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+    CMD python -c "import sys; sys.exit(0)"
+
+# Default command (can be overridden)
+CMD ["python", "-m", "backend.worker.container_runner"]
