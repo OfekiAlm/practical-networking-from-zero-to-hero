@@ -5,7 +5,7 @@ For production, this can be replaced with Celery if needed.
 """
 import json
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, Any, Optional
 
 try:
@@ -68,9 +68,9 @@ class QueueManager:
                 # Enqueue job with RQ
                 job = self._queue.enqueue(
                     'backend.worker.executor.execute_demo_in_container',
-                    job_id=job_id,
-                    demo_id=demo_id,
-                    parameters=parameters,
+                    job_id,
+                    demo_id,
+                    parameters,
                     job_id=job_id,  # RQ job ID same as our job ID
                     timeout=300,
                     result_ttl=3600  # Keep results for 1 hour
@@ -96,7 +96,7 @@ class QueueManager:
             "demo_id": demo_id,
             "parameters": parameters,
             "status": JobStatus.PENDING.value,
-            "created_at": datetime.utcnow().isoformat(),
+            "created_at": datetime.now(timezone.utc).isoformat(),
             "started_at": None,
             "completed_at": None,
             "result": None
@@ -146,7 +146,7 @@ class QueueManager:
             job_id=job.id,
             demo_id=job.kwargs.get('demo_id', 'unknown'),
             status=status,
-            created_at=job.created_at or datetime.utcnow(),
+            created_at=job.created_at or datetime.now(timezone.utc),
             started_at=job.started_at,
             completed_at=job.ended_at,
             result=result
@@ -187,7 +187,7 @@ class QueueManager:
             result: Execution result (if completed)
         """
         if job_id in self._mock_jobs:
-            now = datetime.utcnow().isoformat()
+            now = datetime.now(timezone.utc).isoformat()
             self._mock_jobs[job_id]["status"] = status.value
             
             if status == JobStatus.RUNNING and not self._mock_jobs[job_id]["started_at"]:

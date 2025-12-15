@@ -1,7 +1,7 @@
 """Main FastAPI application."""
 import logging
 from contextlib import asynccontextmanager
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import AsyncGenerator
 
 from fastapi import FastAPI, HTTPException, status
@@ -100,7 +100,7 @@ async def health_check():
     return HealthResponse(
         status="healthy",
         version="1.0.0",
-        timestamp=datetime.utcnow()
+        timestamp=datetime.now(timezone.utc)
     )
 
 

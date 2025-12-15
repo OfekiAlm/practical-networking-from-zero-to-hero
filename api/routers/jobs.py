@@ -1,7 +1,7 @@
 """Job submission and status endpoints."""
 import logging
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException, status, BackgroundTasks
@@ -65,7 +65,7 @@ async def submit_job(job_request: JobRequest, background_tasks: BackgroundTasks)
             job_id=job_id,
             demo_id=job_request.demo_id,
             status=JobStatus.PENDING,
-            created_at=datetime.utcnow(),
+            created_at=datetime.now(timezone.utc),
             started_at=None,
             completed_at=None,
             result=None

@@ -1,5 +1,5 @@
 """Base schemas for the platform."""
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Dict, Optional
 from pydantic import BaseModel, Field
@@ -72,4 +72,4 @@ class HealthResponse(BaseModel):
     """Health check response."""
     status: str = Field(..., description="Service status")
     version: str = Field(..., description="API version")
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
